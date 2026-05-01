@@ -1,21 +1,25 @@
 const {expect}=require ('@playwright/test')
+const {LocatorHelper}=require ('../utils/LocatorHelper')
 
 class FlightDetailsPage{
     constructor(page){
         this.page=page;
+        this.helper = new LocatorHelper(page);
         this.flightNumbers=page.locator("[class*='flight-title']");
-        this.prices=page.locator("[class='price-from-second']");
+        this.prices=[
+            {type: 'css', value: "[class='price-from-second']"}
+        ];
         this.airlineCheckbox=page.locator("//div[@class='airlines']//span[@class='lowest-price']");
     }
 
     async getAllFlightNumbers(){
-        await this.page.waitForLoadState('domcontentloaded');
+        await this.flightNumbers.first().waitFor();
         const flights=await this.flightNumbers.allTextContents();
         console.log(flights);
     }
 
     async getAllPrices(){
-        const prices=await this.prices.allTextContents();
+        const prices=await (await this.helper.findLocator(this.prices)).allTextContents();
         console.log(prices);
     }
 

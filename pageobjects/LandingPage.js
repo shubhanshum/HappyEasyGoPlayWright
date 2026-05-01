@@ -1,11 +1,16 @@
 const config = require('../utils/config');
+const { LocatorHelper } = require('../utils/LocatorHelper');
 
 class LandingPage{
     constructor(page){
         this.page=page;
+        this.helper=new LocatorHelper(page);
         this.departureTextBox='input#D_city';
         this.arrivalTextBox='input#A_city';
-        this.searchButton="[class='sfp-submit']";
+        this.searchButton=[
+            {type: 'css' , value: "[class='sfp-submit']"},
+            {type: 'text' , value: 'Search'}
+        ];
     }
 
     async goto(){
@@ -21,7 +26,7 @@ class LandingPage{
     }
 
     async clickOnSearchButton(){
-        await this.page.click(this.searchButton);
+        await (await this.helper.findLocator(this.searchButton)).click();
     }
 }
 

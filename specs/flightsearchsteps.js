@@ -17,8 +17,6 @@ When('user enters {string} in {string} text field', async function(cityName,fiel
         default:
             throw new Error(cityName+" is not defined");
     }
-    
-    
 });
 
 
@@ -34,8 +32,8 @@ When('user clicks on {string} button', async function(buttonName){
 
 Then('user sees a list of flights',async function(){
     this.flightDetailsPage = new FlightDetailsPage(this.page);
-    //await this.flightDetailsPage.getAllFlightNumbers();
-    //await this.flightDetailsPage.getAllPrices();
+    await this.flightDetailsPage.getAllFlightNumbers();
+    await this.flightDetailsPage.getAllPrices();
 })
 
 When('user filters result based on cheapest airline available', async function(){
